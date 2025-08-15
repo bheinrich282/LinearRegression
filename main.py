@@ -14,16 +14,19 @@ def loss_function(m, b, points):
 
 
 def gradient_descent(m, b, points, learning_rate):
+    n = len(points)
+    # error function: E = (1/n) * ∑i=0->n [(Yi - (m * Xi + b))^2]
+    # dE/dm = -(2/n) * ∑i=0->n [(Yi - (m * Xi + b)) * (Xi)]
+    # dE/db = -(2/n) * ∑i=0->n [(Yi - (m * Xi + b))]
+    # Calculate the gradient:
     m_grad = 0
     b_grad = 0
-    n = len(points)
-
     for i in range(n):
         x = points.iloc[i].studytime
         y = points.iloc[i].score
 
         # derivative w.r.t m:
-        m_grad += -(2/n) * x * (y - (m*x + b))
+        m_grad += -(2/n) * (x * (y - (m*x + b)))
         # derivative w.r.t b:
         b_grad += -(2/n) * (y - (m*x + b))
 
